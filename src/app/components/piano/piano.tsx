@@ -1,18 +1,17 @@
 'use client';
 
-import "./piano.scss";
 import { useEffect, useState } from "react";
+import "./piano.scss";
 
-export default function Piano() {
-  const [selecetedKey, setSelectedKey] = useState(null);
+export default function Piano({ sendDataToParent }) {
+  const [selectedKey, setSelectedKey] = useState('');
 
-  useEffect(() => {
-    alert('hello world');
-  });
-
-  // function handleClick() {
-  //   sendDataToParent(data);
-  // }
+  function handleClick(id: string, purchased: boolean | undefined) {
+    if ( !purchased ) { 
+      setSelectedKey(id);
+      sendDataToParent(id);
+    }
+  }
 
   const keyboard = [
     {id: 'a0'},
@@ -33,7 +32,7 @@ export default function Piano() {
     {id: 'c2'},
     {id: 'c#2'},
     {id: 'd2'},
-    {id: 'd#2'},
+    {id: 'd#2', purchased: true},
     {id: 'e2'},
     {id: 'f2'},
     {id: 'f#2'},
@@ -42,7 +41,7 @@ export default function Piano() {
     {id: 'a2'},
     {id: 'a#2'},
     {id: 'b2'},
-    {id: 'c3'},
+    {id: 'c3', purchased: true},
     {id: 'c#3'},
     {id: 'd3'},
     {id: 'd#3'},
@@ -111,9 +110,14 @@ export default function Piano() {
         {keyboard.map((k) => {
           const cname = k.id[1] === '#' ? k.id[0] + 's' : k.id[0];
           return (
-            <li className={cname + (k.purchased ? ' purchased' : '')} 
+            <li className={
+              cname 
+              + (k.purchased ? ' purchased' : '') 
+              + (k.id === selectedKey ? ' selected' : '')
+            } 
               id={k.id} 
               key={k.id}
+              onClick={()=>handleClick(k.id, k.purchased)}
             />
           )
         })}
