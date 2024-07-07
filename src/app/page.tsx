@@ -12,8 +12,8 @@ const serif = Noto_Serif_Georgian({ subsets: ["latin"] });
 export default function BuyAKey() {
   const [dataFromChild, setDataFromChild] = useState('');
 
-  function handleDataFromChild(data: string) {
-    setDataFromChild(data);
+  function handleDataFromChild(id: string) {
+    setDataFromChild(id);
   }
 
   return (

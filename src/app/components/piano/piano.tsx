@@ -3,13 +3,17 @@
 import { useEffect, useState } from "react";
 import "./piano.scss";
 
-export default function Piano({ sendDataToParent }) {
+type PianoProps = {
+  sendDataToParent: (id: string) => void;
+}
+
+export default function Piano(props: PianoProps) {
   const [selectedKey, setSelectedKey] = useState('');
 
   function handleClick(id: string, purchased: boolean | undefined) {
     if ( !purchased ) { 
       setSelectedKey(id);
-      sendDataToParent(id);
+      props.sendDataToParent(id);
     }
   }
 
