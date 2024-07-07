@@ -87,3 +87,15 @@
   }
 
 }
+
+#scrollIndicator {
+  position: relative;
+}
+
+#indicatorBox {
+  height: 36px;
+  width: calc(100vw / 10);
+  background-color: #001489;
+  opacity: 0.33;
+  position: absolute;
+}

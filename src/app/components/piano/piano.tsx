@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState, useRef } from "react";
 import "./piano.scss";
 
 type PianoProps = {
@@ -9,8 +10,17 @@ type PianoProps = {
 
 export default function Piano(props: PianoProps) {
   const [selectedKey, setSelectedKey] = useState('');
+  const keyboardRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
-  function handleClick(id: string, purchased: boolean | undefined) {
+  const handleScroll = () => {
+    if (keyboardRef.current) {
+      const { scrollLeft } = keyboardRef.current;
+      setScrollPosition(scrollLeft / 10);
+    }
+  };
+
+  const handleClick = ( id: string, purchased: boolean | undefined ) => {
     if ( !purchased ) { 
       setSelectedKey(id);
       props.sendDataToParent(id);
@@ -109,23 +119,39 @@ export default function Piano(props: PianoProps) {
   ]
 
   return (
-    <div className="keyboard overflow-x-scroll py-5">
-      <ul>
-        {keyboard.map((k) => {
-          const cname = k.id[1] === '#' ? k.id[0] + 's' : k.id[0];
-          return (
-            <li className={
-              cname 
-              + (k.purchased ? ' purchased' : '') 
-              + (k.id === selectedKey ? ' selected' : '')
-            } 
-              id={k.id} 
-              key={k.id}
-              onClick={()=>handleClick(k.id, k.purchased)}
-            />
-          )
-        })}
-      </ul>
+    <div className="flex flex-col">
+      <div id='scrollIndicator' className='self-center'>
+        <div id='indicatorBox' style={{left: scrollPosition}} />
+        <Image 
+          alt='piano location indicator' 
+          className='self-center'
+          src={'/mini-piano.png'}
+          height='30'
+          width='340'
+        />
+      </div>
+      <div 
+        className="keyboard overflow-x-scroll py-5"
+        ref={keyboardRef} 
+        onScroll={handleScroll}
+      >
+        <ul>
+          {keyboard.map((k) => {
+            const cname = k.id[1] === '#' ? k.id[0] + 's' : k.id[0];
+            return (
+              <li className={
+                cname 
+                + (k.purchased ? ' purchased' : '') 
+                + (k.id === selectedKey ? ' selected' : '')
+              } 
+                id={k.id} 
+                key={k.id}
+                onClick={()=>handleClick(k.id, k.purchased)}
+              />
+            )
+          })}
+        </ul>
+      </div>
     </div>
   )
 }

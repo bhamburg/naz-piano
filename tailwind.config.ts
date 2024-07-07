@@ -12,7 +12,6 @@ const config: Config = {
   theme: {
     colors: {
       'naz-blue': '#001489',
-      'naz-dark-blue': '#001489',
       'naz-gold': '#ffd666',
       'white': '#ffffff',
       current: 'currentColor',
