@@ -27,7 +27,7 @@ export default function BuyAKey() {
           alt="Nazareth Academy High School seal"
         />
         <p className={serif.className + " text-naz-gold"}>
-          Nazareth Academy High School Performing Arts
+          Nazareth Academy High School
         </p>
         <h1 className="text-white font-bold"><em>Buy A Key</em> Fundraiser</h1>
       </header>
@@ -37,6 +37,7 @@ export default function BuyAKey() {
         <p className="font-bold text-6xl uppercase">&nbsp;{dataFromChild}&nbsp;</p>
       </div>
       <Piano sendDataToParent={ handleDataFromChild } />
+      <p>Scroll the piano keyboard left and right. Click to make a selection.</p>
     </main>
   );
 }
