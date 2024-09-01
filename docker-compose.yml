@@ -1,0 +1,9 @@
+services:
+  naz-piano-frontend:
+    image: naz-piano-frontend:latest
+    build:
+      context: ./frontend
+      target: dev
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
