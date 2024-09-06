@@ -1,0 +1,27 @@
+services:
+  web:
+    container_name: naz-piano-web
+    build:
+      context: ./web
+      target: dev
+      dockerfile: Dockerfile
+    # depends_on:
+    #   naz-piano-db:
+    #     condition: service_healthy
+    ports:
+      - "4639:3000"
+  db:
+    container_name: naz-piano-db
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+ 
+volumes:
+  pgdata: {}
